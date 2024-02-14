@@ -61,3 +61,10 @@ $ tree
 ├── serv-a
 └── serv-b
 ```
+
+#step6
+```
+$ vi serv-a/index.html  <h1>A</h1>
+$ cp serv-a/index.html serv-b
+$ vi serv-b/index.html  <h1>A</h1>
+각각 파일 만들어서 컨테이너 /usr/share/nginx/html/ 밑에 각각 cp하기
