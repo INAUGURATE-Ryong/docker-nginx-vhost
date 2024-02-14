@@ -75,9 +75,9 @@ $ sudo docker cp serv-b/index.html serv-b:/usr/share/nginx/html/
 # step7
 $ docker network ls
 
-bridge 네트워크는 하나의 호스트 컴퓨터 내에서 여러 컨테이너 연결
-host 네트워크는 컨터이너를 호스트 컴퓨터와 동일한 네트워크에서 컨테이너를 돌리기 위해서 사용
-overlay 네트워크는 여러 호스트에 분산되어 돌아가는 컨테이너들 간에 네트워킹을 위해서 사용
+- bridge 네트워크는 하나의 호스트 컴퓨터 내에서 여러 컨테이너 연결
+- host 네트워크는 컨터이너를 호스트 컴퓨터와 동일한 네트워크에서 컨테이너를 돌리기 위해서 사용
+- overlay 네트워크는 여러 호스트에 분산되어 돌아가는 컨테이너들 간에 네트워킹을 위해서 사용
 ```
 네트워크 생성 후 붙이기.
 create
@@ -109,4 +109,30 @@ CONTAINER ID   IMAGE          COMMAND                  CREATED       STATUS     
 2127fcb00f0d   nginx:latest   "/docker-entrypoint.…"   3 hours ago   Up 2 minutes   0.0.0.0:8001->80/tcp, :::8001->80/tcp   lb
 563b52d28965   nginx          "/docker-entrypoint.…"   3 hours ago   Up 3 hours     0.0.0.0:8003->80/tcp, :::8003->80/tcp   serv-b
 28bdc543cf50   nginx          "/docker-entrypoint.…"   3 hours ago   Up 3 hours     0.0.0.0:8002->80/tcp, :::8002->80/tcp   serv-a
+```
+
+# step8
+```
+각 serv-a,b 컨테이너에 들어가서 ping, telnet 설치
+$ sudo docker exec -it serv-b bash
+$ sudo docker exec -it serv-a bash
+
+root@28bdc543cf50:/# apt update
+root@28bdc543cf50:/# apt install iputils-ping
+root@28bdc543cf50:/# apt install telnet
+
+serv-a에 다시 접속해서
+root@28bdc543cf50:/# ping 172.18.0.2(serv-b IP)  또는 ping serv-b
+
+PING serv-b (172.18.0.3) 56(84) bytes of data.
+64 bytes from serv-b.ablb (172.18.0.3): icmp_seq=1 ttl=64 time=0.767 ms
+64 bytes from serv-b.ablb (172.18.0.3): icmp_seq=2 ttl=64 time=0.095 ms
+64 bytes from serv-b.ablb (172.18.0.3): icmp_seq=3 ttl=64 time=0.070 ms
+64 bytes from serv-b.ablb (172.18.0.3): icmp_seq=4 ttl=64 time=0.106 ms
+
+root@28bdc543cf50:/# telnet serv-b 80  // 8002,8003포트가 아닌 docker 내부 포트 이용 network설정을 하면 8002,8003포트가 필요가 없어진다.
+Trying 172.18.0.3...
+Connected to serv-b.
+Escape character is '^]'.
+
 ```
