@@ -48,7 +48,7 @@ $ sudo docker cp config/default.conf lb:/etc/nginx/conf.d/
 
 ```
 
-#step5
+# step5
 ```
 $ mkdir lb serv-a serv-b //폴더 3개 만들기
 $ mv config lb // config폴더를 lb폴더로 옮기기
@@ -62,7 +62,7 @@ $ tree
 └── serv-b
 ```
 
-#step6
+# step6
 ```
 $ vi serv-a/index.html  <h1>A</h1>
 $ cp serv-a/index.html serv-b
