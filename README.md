@@ -145,8 +145,14 @@ $ sudo docker commit serv-b memento12/serv-b
 $ docker rm serv-a
 $ docker rm serv-b
 
-$ docker run --name serv-a -d memento12/serv-a
-$ docker run --name serv-b -d memento12/serv-b
+$ docker run --name serv-a -d memento12/serv-a  // -p옵션 없이 run 하기
+$ docker run --name serv-b -d memento12/serv-b  // -p옵션 없이 run 하기
+
+$ docker ps
+CONTAINER ID   IMAGE              COMMAND                  CREATED         STATUS          PORTS                                   NAMES
+3cbb0d8cb116   memento12/serv-a   "/docker-entrypoint.…"   4 minutes ago   Up 4 minutes    80/tcp                                  serv-a
+3522b218f63e   memento12/serv-b   "/docker-entrypoint.…"   7 minutes ago   Up 7 minutes    80/tcp                                  serv-b
+2127fcb00f0d   nginx:latest       "/docker-entrypoint.…"   4 hours ago     Up 55 minutes   0.0.0.0:8001->80/tcp, :::8001->80/tcp   lb
 
 $ docker network connect ablb serv-a
 $ docker network connect ablb serv-b
