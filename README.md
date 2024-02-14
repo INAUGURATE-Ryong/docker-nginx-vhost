@@ -181,9 +181,9 @@ $ sudo docker build -t serv-b:0.1.0 .
 $ sudo docker build -t lb:0.1.0 .
 
 run
-$ sudo docker run -d --name lb -p 8001:80 lb:0.1.0
 $ sudo docker run -d --name serv-a serv-a:0.1.0
 $ sudo docker run -d --name serv-b serv-b:0.1.0
+$ sudo docker run -d --name lb -p 8001:80 lb:0.1.0
 
 network
 $ docker network create dockerfileNW
