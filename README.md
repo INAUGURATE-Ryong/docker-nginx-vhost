@@ -47,3 +47,17 @@ root@2127fcb00f0d:/# cd etc/nginx/conf.d 폴더 안에 있는 default.conf 를 s
 $ sudo docker cp config/default.conf lb:/etc/nginx/conf.d/
 
 ```
+
+#step5
+```
+$ mkdir lb serv-a serv-b //폴더 3개 만들기
+$ mv config lb // config폴더를 lb폴더로 옮기기
+$ tree
+.
+├── README.md
+├── lb
+│   └── config
+│       └── default.conf
+├── serv-a
+└── serv-b
+```
