@@ -22,3 +22,21 @@ $ docker run -itd -p 8002:80 --name serv-a nginx
 $ docker run -itd -p 8003:80 --name serv-b nginx
 $ docker run -itd -p 8001:80 --name lb nginx:latest
 ```
+
+# step 3
+```
+vi config/default.conf
+
+upstream serv {
+    server serv-a:80;
+    server serv-b:80;
+}
+server {
+    listen 80;
+
+    location /
+    {
+        proxy_pass http://serv;
+    }
+}
+```
