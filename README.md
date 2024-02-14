@@ -71,3 +71,42 @@ $ vi serv-b/index.html  <h1>A</h1>
 $ sudo docker cp serv-a/index.html serv-a:/usr/share/nginx/html/
 $ sudo docker cp serv-b/index.html serv-b:/usr/share/nginx/html/
 ```
+
+# step7
+$ docker network ls
+
+bridge 네트워크는 하나의 호스트 컴퓨터 내에서 여러 컨테이너 연결
+host 네트워크는 컨터이너를 호스트 컴퓨터와 동일한 네트워크에서 컨테이너를 돌리기 위해서 사용
+overlay 네트워크는 여러 호스트에 분산되어 돌아가는 컨테이너들 간에 네트워킹을 위해서 사용
+```
+네트워크 생성 후 붙이기.
+create
+$ docker network create ablb
+$ docker network ls
+NETWORK ID     NAME      DRIVER    SCOPE
+dfff2f701263   ablb      bridge    local
+b49cfa625b8a   bridge    bridge    local
+dd33952430ff   host      host      local
+bd86b65b416b   none      null      local
+
+inspect
+$ docker network inspect ablb //내용은 이슈 확인
+
+connect
+$ docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED       STATUS         PORTS                                   NAMES
+563b52d28965   nginx          "/docker-entrypoint.…"   3 hours ago   Up 3 hours     0.0.0.0:8003->80/tcp, :::8003->80/tcp   serv-b
+28bdc543cf50   nginx          "/docker-entrypoint.…"   3 hours ago   Up 3 hours     0.0.0.0:8002->80/tcp, :::8002->80/tcp   serv-a
+
+$ sudo docker network connect ablb serv-a
+$ sudo docker network connect ablb serv-b
+$ sudo docker network connect ablb lb
+
+$ docker network inspect ablb 다시 했을 때 컨테이너 부분에 lb가 안떠있으면 //내용은 이슈 확인
+$ docker start lb 실행 후 확인
+$ docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED       STATUS         PORTS                                   NAMES
+2127fcb00f0d   nginx:latest   "/docker-entrypoint.…"   3 hours ago   Up 2 minutes   0.0.0.0:8001->80/tcp, :::8001->80/tcp   lb
+563b52d28965   nginx          "/docker-entrypoint.…"   3 hours ago   Up 3 hours     0.0.0.0:8003->80/tcp, :::8003->80/tcp   serv-b
+28bdc543cf50   nginx          "/docker-entrypoint.…"   3 hours ago   Up 3 hours     0.0.0.0:8002->80/tcp, :::8002->80/tcp   serv-a
+```
