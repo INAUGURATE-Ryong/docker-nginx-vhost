@@ -134,5 +134,22 @@ root@28bdc543cf50:/# telnet serv-b 80  // 8002,8003포트가 아닌 docker 내�
 Trying 172.18.0.3...
 Connected to serv-b.
 Escape character is '^]'.
+```
 
+# step9
+```
+serv-a 와 serv-b의 포트번호인 8002,8003 을 없애고, 8001 포트인 lb만을 통해서 접속하는 실습
+$ sudo docker commit serv-a memento12/serv-a
+$ sudo docker commit serv-b memento12/serv-b
+
+$ docker rm serv-a
+$ docker rm serv-b
+
+$ docker run --name serv-a -d memento12/serv-a
+$ docker run --name serv-b -d memento12/serv-b
+
+$ docker network connect ablb serv-a
+$ docker network connect ablb serv-b
+
+$ sudo docker network inspect ablb // 컨테이너 확인 
 ```
