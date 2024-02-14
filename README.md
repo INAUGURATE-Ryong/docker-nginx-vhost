@@ -40,3 +40,10 @@ server {
     }
 }
 ```
+# step 4
+```
+$ sudo docker exec -it lb bash 에 들어가서.
+root@2127fcb00f0d:/# cd etc/nginx/conf.d 폴더 안에 있는 default.conf 를 step3에 만든 default.conf로 바꾸기.
+$ sudo docker cp config/default.conf lb:/etc/nginx/conf.d/
+
+```
