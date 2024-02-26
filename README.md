@@ -191,3 +191,6 @@ $ sudo docker network connect dockerfileNW serv-a
 $ sudo docker network connect dockerfileNW serv-b
 $ sudo docker network connect dockerfileNW lb
 ```
+
+# NGINX-PATH-ROUTING
+
